@@ -1,0 +1,120 @@
+{
+    "cards":
+    [
+        {
+            "Test":
+            [
+                {
+                    "name": "ERA_PREHISTORIC",
+                    "description": "This is a test 1",
+    
+                    "textureFile": "ASSETS/IMAGES/image.png",
+    
+                    "cost": 1,
+                    "damage": 10,
+
+                    "amountOfEffect": 1,
+                    "effects": ["draw"],
+    
+                    "amountOfEras": 4
+                },
+    
+                {
+                    "name": "ERA_MEDIEVAL",
+                    "description": "This is a test 2",
+    
+                    "textureFile": "ASSETS/IMAGES/image.png",
+    
+                    "cost": 2,
+                    "damage": 20,
+                    
+                    "amountOfEffect": 2,
+                    "effects": ["draw", "stun"]
+                },
+    
+                {
+                    "name": "ERA_MODERN",
+                    "description": "This is a test 3",
+    
+                    "textureFile": "ASSETS/IMAGES/image.png",
+    
+                    "cost": 3,
+                    "damage": 30,
+                    
+                    "amountOfEffect": 2,
+                    "effects": ["draw", "stun"]
+                },
+    
+                {
+                    "name": "ERA_FUTURISTIC",
+                    "description": "This is a test 4",
+    
+                    "textureFile": "ASSETS/IMAGES/image.png",
+    
+                    "cost": 4,
+                    "damage": 40,
+                    
+                    "amountOfEffect": 2,
+                    "effects": ["draw", "stun"]
+                }
+            ],
+
+            "Next Card":
+            [
+                {
+                    "name": "ERA_PREHISTORIC 2",
+                    "description": "This is a test 1",
+    
+                    "textureFile": "ASSETS/IMAGES/image.png",
+    
+                    "cost": 1,
+                    "damage": 10,
+                    
+                    "amountOfEffect": 1,
+                    "effects": ["draw"],
+    
+                    "amountOfEras": 4
+                },
+    
+                {
+                    "name": "ERA_MEDIEVAL 2",
+                    "description": "This is a test 2",
+    
+                    "textureFile": "ASSETS/IMAGES/image.png",
+    
+                    "cost": 2,
+                    "damage": 20,
+                    
+                    "amountOfEffect": 2,
+                    "effects": ["draw", "stun"]
+                },
+    
+                {
+                    "name": "ERA_MODERN 2",
+                    "description": "This is a test 3",
+    
+                    "textureFile": "ASSETS/IMAGES/image.png",
+    
+                    "cost": 3,
+                    "damage": 30,
+                    
+                    "amountOfEffect": 2,
+                    "effects": ["draw", "stun"]
+                },
+    
+                {
+                    "name": "ERA_FUTURISTIC 2",
+                    "description": "This is a test 4",
+    
+                    "textureFile": "ASSETS/IMAGES/image.png",
+    
+                    "cost": 4,
+                    "damage": 40,
+                    
+                    "amountOfEffect": 2,
+                    "effects": ["draw", "stun"]
+                }
+            ]
+        }
+    ]
+}
