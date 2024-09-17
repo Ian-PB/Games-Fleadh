@@ -138,6 +138,9 @@ void GamePlay::setupObjects()
 	// Load all the cards into the game
 	Card::loadCardData();
 
+	// Load all enemies
+	Enemy::loadEnemies();
+
 
 	// Buttons
 	endTurnButton.setup({ 100, 100 }, 100, 75, sf::Color::Blue);

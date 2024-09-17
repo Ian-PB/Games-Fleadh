@@ -1,6 +1,6 @@
 #pragma once
 
-#include "BattleManager.h"
+
 #include "Global.h"
 #include "Enemy.h"
 
@@ -19,7 +19,8 @@ public:
 	static int playersTurnsEnded;
 
 	// Enemy info
-	void setCurrentEnemies();
+	static std::vector<Enemy> allEnemies;
+	// void setCurrentEnemies();
 	static int enemyAmount;
 	static Enemy currentEnemies[MAX_ENEMIES];
 

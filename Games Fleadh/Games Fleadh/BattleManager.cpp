@@ -1,6 +1,7 @@
 #include "BattleManager.h"
 
-Enemy BattleManager::currentEnemies[];
+std::vector<Enemy> BattleManager::allEnemies;
+Enemy BattleManager::currentEnemies[MAX_ENEMIES];
 int BattleManager::enemyAmount = 1; // Set to 1 (TEMP)
 
 int BattleManager::playerAmount = 1;
@@ -40,8 +41,4 @@ void BattleManager::endTurn()
 
 		BattleManager::turnNumber++;
 	}
-}
-
-void BattleManager::setCurrentEnemies()
-{
 }

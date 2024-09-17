@@ -12,7 +12,6 @@ void Deck::fillDeckRand()
 {
 	for (int i = 0; i < MAX_DECK_SIZE; i++)
 	{
-		std::cout << CardManager::allCards.size() << "\n";
 		int randCard = rand() % CardManager::allCards.size();
 
 		deck[i] = CardManager::allCards[randCard];
