@@ -5,7 +5,33 @@
             "Test Enemy":
             [
                 {
-                    "enemyName": "THE GREAT ONE",
+                    "name": "THE GREAT ONE",
+                    "textureFile": "ASSETS/IMAGES/image.png",
+
+                    "amountOfActions": 3
+                },
+
+                {
+                    "damage": 10,
+                    "actionEffects": ["poison", "fire"],
+                    "amountOfEffects": 2
+                },
+                {
+                    "damage": 25,
+                    "actionEffects": ["none"],
+                    "amountOfEffects": 1
+                },
+                {
+                    "damage": 10,
+                    "actionEffects": ["fire"],
+                    "amountOfEffects": 1
+                }
+            ],
+
+            "Test Enemy 2":
+            [
+                {
+                    "name": "THE not so GREAT ONE",
                     "textureFile": "ASSETS/IMAGES/image.png",
 
                     "amountOfActions": 3

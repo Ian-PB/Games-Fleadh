@@ -45,22 +45,33 @@ void Enemy::loadEnemies()
                             break;
                         }
 
-                        // Extract data for the enemy
-                        newEnemy.name = action.value("name", std::string(""));
-                        newEnemy.textureFile = action.value("textureFile", std::string(""));
-                        newEnemy.actions[actionIndex].damage = action.value("damage", 0);
-                        newEnemy.actions[actionIndex].amountOfEffects = action.value("amountOfActions", 0);
+                        if (actionIndex == 0)
+                        {
+                            newEnemy.name = action.value("name", std::string(""));
+                            newEnemy.textureFile = action.value("textureFile", std::string(""));
 
-                        // Print out the data
-                        std::cout << "Loading Enemy: " << newEnemy.name << std::endl;
-                        std::cout << "Damage: " << newEnemy.actions[actionIndex].damage << std::endl;
-                        std::cout << "Amount of Actions: " << newEnemy.actions[actionIndex].amountOfEffects << std::endl;
+                            newEnemy.actions[actionIndex].amountOfEffects = action.value("amountOfActions", 0);
+
+                            // Print what was extracted
+                            std::cout << "Loading Enemy: " << newEnemy.name << std::endl;
+                            std::cout << "Amount of Actions: " << newEnemy.actions[actionIndex].amountOfEffects << std::endl;
+                        }
+                        else
+                        {
+                            // Extract data for the enemy's actions
+                            newEnemy.actions[actionIndex].damage = action.value("damage", 0);
+
+                            // Print out the data
+                            std::cout << "Damage: " << newEnemy.actions[actionIndex - 1].damage << std::endl;
+                        }
+
+                       
 
                         // Load the effects array (if it exists)
-                        if (action.contains("effects") && action["effects"].is_array())
+                        if (action.contains("actionEffects") && action["actionEffects"].is_array())
                         {
                             std::vector<std::string> effectsVector;
-                            for (const auto& effect : action["effects"])
+                            for (const auto& effect : action["actionEffects"])
                             {
                                 effectsVector.push_back(effect.get<std::string>());
                                 std::cout << "Effect: " << effect.get<std::string>() << std::endl; // Print each effect
