@@ -1,9 +1,16 @@
 #include "Card.h"
+#include "Enemy.h"
 
+int Card::cardsHeld = 0;
 
+std::vector<Card> Card::allCards;
 
 Card::Card()
 {
+    // Static variable
+    cardsHeld = 0;
+
+
 	body.setFillColor(sf::Color::White);
 	body.setSize({ (float)width, (float)height });
 	body.setOrigin({ (float)width / 2, (float)height / 2 });
@@ -56,14 +63,28 @@ void Card::add()
 	}
 }
 
-void Card::use()
+void Card::useOnEnemies()
 {
 	active = false;
 
-    // Deal Damage
+    // Deal damage to the Enemy
     BattleManager::currentEnemies[0].takeDamage(upgradeData[currentEra].damage);
 
 	// Do effects
+    for (int i = 0; i < upgradeData[currentEra].amountOfEffects; i++)
+    {
+        upgradeData[currentEra].effects[i]();
+    }
+}
+
+void Card::useOnPlayers()
+{
+    active = false;
+
+    // Deal damage to the Player
+    BattleManager::currentPlayers[0].takeDamage(upgradeData[currentEra].damage);
+
+    // Do effects
     for (int i = 0; i < upgradeData[currentEra].amountOfEffects; i++)
     {
         upgradeData[currentEra].effects[i]();
@@ -75,11 +96,22 @@ void Card::upgrade()
     if (currentEra < amountOfEras - 1)
     {
         currentEra++;
-        std::cout << currentEra << "\n";
     }
     else
     {
         std::cout << "ERROR - ERA NOT AVAILABLE \n";
+    }
+}
+
+void Card::upgradeTo(int t_newEra)
+{
+    if (t_newEra >= 0 && t_newEra <= amountOfEras - 1)
+    {
+        currentEra = t_newEra;
+    }
+    else
+    {
+        std::cout << "ERROR - ERA: " << t_newEra << " IS NOT AVAILABLE \n";
     }
 }
 
@@ -189,7 +221,7 @@ void Card::loadCardData()
                     newCard.amountOfEras = eraIndex;
 
                     // Add the card to the collection
-                    CardManager::allCards.push_back(newCard);
+                    Card::allCards.push_back(newCard);
                 }
             }
         }

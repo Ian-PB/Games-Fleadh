@@ -54,9 +54,6 @@
     <ClCompile Include="Card.cpp">
       <Filter>Source Files\Card-Based-Classes</Filter>
     </ClCompile>
-    <ClCompile Include="CardManager.cpp">
-      <Filter>Source Files\Card-Based-Classes</Filter>
-    </ClCompile>
     <ClCompile Include="Deck.cpp">
       <Filter>Source Files\Card-Based-Classes</Filter>
     </ClCompile>
@@ -71,6 +68,9 @@
     </ClCompile>
     <ClCompile Include="GamePlay.cpp">
       <Filter>Source Files\Scene-Based-Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -89,9 +89,6 @@
     <ClInclude Include="Card.h">
       <Filter>Header Files\Card-Based-Classes</Filter>
     </ClInclude>
-    <ClInclude Include="CardManager.h">
-      <Filter>Header Files\Card-Based-Classes</Filter>
-    </ClInclude>
     <ClInclude Include="Deck.h">
       <Filter>Header Files\Card-Based-Classes</Filter>
     </ClInclude>
@@ -106,6 +103,9 @@
     </ClInclude>
     <ClInclude Include="GamePlay.h">
       <Filter>Header Files\Scene-Based-Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

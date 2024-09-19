@@ -1,5 +1,5 @@
 #include "Enemy.h"
-#include "BattleManager.h"
+
 
 Enemy::Enemy()
 {
@@ -10,100 +10,69 @@ Enemy::Enemy()
 	body.setPosition({ (SCREEN_WIDTH / 4) * 3, SCREEN_HEIGHT / 4 });
 }
 
-void Enemy::loadEnemies()
+void Enemy::setupEnemy(Era t_era)
 {
-    // Read JSON file
-    std::ifstream file("ASSETS\\ENEMY_DATA\\enemies.json");
-    if (!file.is_open())
-    {
-        std::cerr << "Could not open file: enemies.json" << std::endl;
-        return;
-    }
+	// Randomize the amount of cards the enemy will have between 2-5 (inclusive)
+	amountOfCards = (rand() % 3) + 2;
 
-    nlohmann::json jsonData;
-    file >> jsonData; // Load JSON data
-    file.close();
+	// Setup the cards the enemy will have depending on its era
+	switch (t_era)
+	{
+	case Era::None:
+		break;
 
-    // Parse the "enemies" array
-    if (jsonData.contains("enemies") && jsonData["enemies"].is_array())
-    {
-        for (const auto& enemyGroup : jsonData["enemies"])
-        {
-            for (const auto& enemy : enemyGroup.items()) // Iterate through each enemy group
-            {
-                if (enemy.value().is_array())
-                {
-                    // Create a new enemy for each entry in the array
-                    Enemy newEnemy;
-                    int actionIndex = 0; // Index for multiple eras in Action
+	case Era::Prehistoric:
 
-                    for (const auto& action : enemy.value())
-                    {
-                        if (actionIndex >= MAX_ACTIONS)
-                        {
-                            std::cerr << "Max actions exceeded for enemy: " << enemy.key() << std::endl;
-                            break;
-                        }
+		for (int i = 0; i < amountOfCards; i++)
+		{
+			int randCard = rand() % Card::allCards.size(); // Gain a random card
 
-                        // Extract data for the enemy
-                        newEnemy.name = action.value("name", std::string(""));
-                        newEnemy.textureFile = action.value("textureFile", std::string(""));
-                        newEnemy.actions[actionIndex].damage = action.value("damage", 0);
-                        newEnemy.actions[actionIndex].amountOfEffects = action.value("amountOfActions", 0);
+			actionCards[i] = Card::allCards[randCard]; // Assign that card to index i of the enemies action cards
+		}
 
-                        // Print out the data
-                        std::cout << "Loading Enemy: " << newEnemy.name << std::endl;
-                        std::cout << "Damage: " << newEnemy.actions[actionIndex].damage << std::endl;
-                        std::cout << "Amount of Actions: " << newEnemy.actions[actionIndex].amountOfEffects << std::endl;
+		break;
 
-                        // Load the effects array (if it exists)
-                        if (action.contains("effects") && action["effects"].is_array())
-                        {
-                            std::vector<std::string> effectsVector;
-                            for (const auto& effect : action["effects"])
-                            {
-                                effectsVector.push_back(effect.get<std::string>());
-                                std::cout << "Effect: " << effect.get<std::string>() << std::endl; // Print each effect
-                            }
+	case Era::Medieval:
 
-                            // Convert std::vector to a C-style array and pass to addEffects
-                            int numEffects = static_cast<int>(effectsVector.size());
-                            std::string* effectsArray = new std::string[numEffects];
-                            for (int i = 0; i < numEffects; ++i)
-                            {
-                                effectsArray[i] = effectsVector[i];
-                            }
+		for (int i = 0; i < amountOfCards; i++)
+		{
+			int randCard = rand() % Card::allCards.size(); // Gain a random card
 
-                            // Pass the array to addEffects
-                            newEnemy.addEffects(effectsArray, actionIndex);
+			actionCards[i] = Card::allCards[randCard]; // Assign that card to index i of the enemies action cards
+			// Upgrade the card to be of the Medieval era
+			actionCards[i].upgradeTo(1);
+		}
+		break;
 
-                            // Clean up the dynamically allocated array
-                            delete[] effectsArray;
-                        }
+	case Era::Modern:
 
-                        // Load the texture file
-                        if (!newEnemy.texture.loadFromFile(newEnemy.textureFile))
-                        {
-                            std::cerr << "Failed to load texture: " << newEnemy.textureFile << std::endl;
-                        }
+		for (int i = 0; i < amountOfCards; i++)
+		{
+			int randCard = rand() % Card::allCards.size(); // Gain a random card
 
-                        actionIndex++;
-                    }
+			actionCards[i] = Card::allCards[randCard]; // Assign that card to index i of the enemies action cards
+			// Upgrade the card to be of the Medieval era
+			actionCards[i].upgradeTo(2);
+		}
 
-                    // Store the number of actions
-                    newEnemy.amountOfActions = actionIndex;
+		break;
 
-                    // Add the enemy to the collection
-                    BattleManager::allEnemies.push_back(newEnemy);
-                }
-            }
-        }
-    }
-    else
-    {
-        std::cerr << "Invalid or missing 'enemies' array in JSON file." << std::endl;
-    }
+	case Era::Futuristic:
+
+		for (int i = 0; i < amountOfCards; i++)
+		{
+			int randCard = rand() % Card::allCards.size(); // Gain a random card
+
+			actionCards[i] = Card::allCards[randCard]; // Assign that card to index i of the enemies action cards
+			// Upgrade the card to be of the Medieval era
+			actionCards[i].upgradeTo(3);
+		}
+
+		break;
+	}
 }
+
+
 
 
 void Enemy::draw(sf::RenderWindow& t_window)
@@ -113,6 +82,9 @@ void Enemy::draw(sf::RenderWindow& t_window)
 
 void Enemy::doTurn()
 {
+	int randCard = rand() % amountOfCards;
+
+	actionCards[randCard].useOnPlayers();
 }
 
 void Enemy::takeDamage(int t_damage)
@@ -131,20 +103,4 @@ void Enemy::takeDamage(int t_damage)
 
 		std::cout << "I AM DEAD \n";
 	}
-}
-
-void Enemy::addEffects(std::string t_effects[], int t_actionToAddTo)
-{
-    for (int i = 0; i < actions[t_actionToAddTo].amountOfEffects; i++)
-    {
-        // Find the effect coresponding to the string
-        //if (t_effects[i] == "draw")
-        //{
-        //    actions[t_actionToAddTo].effects[i] = blankEffect; ////// TEMP - Assigning a blank effect
-        //}
-        //else if (t_effects[i] == "stun")
-        //{
-        //    actions[t_actionToAddTo].effects[i] = blankEffect2; ////// TEMP - Assigning a blank effect
-        //}
-    }
 }

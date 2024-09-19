@@ -5,21 +5,23 @@
 #include <fstream> // For file handling
 #include <json.hpp>
 
-#include "Global.h"
-#include "CardManager.h"
+
+
 #include "BattleManager.h"
+
+
 
 struct UpgradeData
 {
 	sf::Texture texture;
-	std::string textureFile;
+	std::string textureFile = "";
 	std::string name = "";
 	std::string description = "";
 	int cost = 0;
 	int damage = 0;
 
 	int amountOfEffects = 0;
-	void (*effects[MAX_EFFECTS])();
+	void (*effects[MAX_EFFECTS])() = { nullptr };
 };
 
 class Card
@@ -42,11 +44,20 @@ public:
 
 	
 	void add();
-	void use();
+	void useOnEnemies();
+	void useOnPlayers();
+
 	void upgrade();
+	// Upgrade to a pre-set era. 0 == prehistoric --> 3 == futuristic
+	void upgradeTo(int t_newEra);
 
 	// Check if active in hand
 	bool active = false;
+
+	// Managing cards
+	static int cardsHeld;
+
+	static std::vector<Card> allCards;
 
 private:
 
@@ -54,7 +65,7 @@ private:
 
 	// Card info
 	sf::Sprite sprite;
-	int amountOfEras = 0;
+	int amountOfEras = 0; // 0 = prehistoric, 3 = futuristic
 	int currentEra = 0;
 
 	// Card Hitbox info
@@ -62,7 +73,7 @@ private:
 	int width = 100;
 	int height = 150;
 
-	sf::Vector2f position;
+	sf::Vector2f position = {};
 
 	bool hovering = false;
 

@@ -1,9 +1,12 @@
 #include "BattleManager.h"
+#include "Enemy.h"
+
 
 std::vector<Enemy> BattleManager::allEnemies;
 Enemy BattleManager::currentEnemies[MAX_ENEMIES];
 int BattleManager::enemyAmount = 1; // Set to 1 (TEMP)
 
+Player BattleManager::currentPlayers[MAX_PLAYERS];
 int BattleManager::playerAmount = 1;
 int BattleManager::playersTurnsEnded = 0;
 bool BattleManager::playerTurn = true;
@@ -11,9 +14,7 @@ bool BattleManager::playerTurn = true;
 // Turn variables
 int BattleManager::turnNumber = 0;
 
-BattleManager::BattleManager()
-{
-}
+
 
 void BattleManager::startCombat()
 {
@@ -32,13 +33,19 @@ void BattleManager::endTurn()
 		BattleManager::playerTurn = false;
 
 		// Do enemy turn...
-		//
-		// for (i = 0; i < enemyAmount; i++)
-		// {
-		//		enemyArray[i].doTurn;
-		// }
-		//
+		for (int i = 0; i < enemyAmount; i++)
+		{
+			currentEnemies[i].doTurn();
+		}
+		
 
 		BattleManager::turnNumber++;
+		BattleManager::playersTurnsEnded = 0;
+
+		std::cout << "Players turn: \n";
+		BattleManager::playerTurn = true;
+		
+
+
 	}
 }

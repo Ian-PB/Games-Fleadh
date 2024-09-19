@@ -12,9 +12,9 @@ void Deck::fillDeckRand()
 {
 	for (int i = 0; i < MAX_DECK_SIZE; i++)
 	{
-		int randCard = rand() % CardManager::allCards.size();
+		int randCard = rand() % Card::allCards.size();
 
-		deck[i] = CardManager::allCards[randCard];
+		deck[i] = Card::allCards[randCard];
 	}
 }
 

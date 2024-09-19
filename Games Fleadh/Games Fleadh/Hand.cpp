@@ -4,7 +4,7 @@
 
 void Hand::draw(sf::RenderWindow& t_window)
 {
-	for (int i = 0; i < CardManager::cardsHeld; i++)
+	for (int i = 0; i < Card::cardsHeld; i++)
 	{
 		cards[i].draw(t_window);
 	}
@@ -16,11 +16,11 @@ void Hand::update()
 
 void Hand::checkForMouse()
 {
-	for (int i = 0; i < CardManager::cardsHeld; i++)
+	for (int i = 0; i < Card::cardsHeld; i++)
 	{
 		if (cards[i].checkForMouse())
 		{
-			cards[i].use();
+			cards[i].useOnEnemies();
 
 
 			remakeHand();
@@ -37,7 +37,7 @@ void Hand::startingDraw()
 		cards[i] = Deck::deck[randCard];
 		cards[i].add();
 
-		CardManager::cardsHeld = startSize;
+		Card::cardsHeld = startSize;
 	}
 
 	// Set the positions
@@ -46,16 +46,16 @@ void Hand::startingDraw()
 
 void Hand::addCard()
 {
-	if (CardManager::cardsHeld < MAX_HAND_SIZE)
+	if (Card::cardsHeld < MAX_HAND_SIZE)
 	{
 		int newRandCard = rand() % Deck::deckSize;
 
 		// Add on the newest draw card
-		cards[CardManager::cardsHeld] = Deck::deck[newRandCard]; // (Using the cardsHeld variable since it is 1 more than the current index)
-		cards[CardManager::cardsHeld].add(); // activates it and checks for a drawn effect
+		cards[Card::cardsHeld] = Deck::deck[newRandCard]; // (Using the cardsHeld variable since it is 1 more than the current index)
+		cards[Card::cardsHeld].add(); // activates it and checks for a drawn effect
 
 		// Set the cards held int correctly
-		CardManager::cardsHeld++;
+		Card::cardsHeld++;
 
 
 		// Set the positions
@@ -69,7 +69,7 @@ void Hand::addCard()
 
 void Hand::upgradeAllCards()
 {
-	for (int i = 0; i < CardManager::cardsHeld; i++)
+	for (int i = 0; i < Card::cardsHeld; i++)
 	{
 		cards[i].upgrade();
 	}
@@ -83,13 +83,13 @@ void Hand::setPositions()
 	const float SPACING = 10.0f; // Adjust for desired spacing
 
 	// Calculate total width of all cards including spacing between them
-	float totalWidth = (CardManager::cardsHeld * CARD_WIDTH) + ((CardManager::cardsHeld - 1) * SPACING);
+	float totalWidth = (Card::cardsHeld * CARD_WIDTH) + ((Card::cardsHeld - 1) * SPACING);
 
 	// Calculate the starting x-position to center the array
 	// The center of the first card should be offset from the screen center by half the total width
 	float startX = (SCREEN_WIDTH / 2.0f) - (totalWidth / 2.0f) + (CARD_WIDTH / 2.0f);
 
-	for (int i = 0; i < CardManager::cardsHeld; i++)
+	for (int i = 0; i < Card::cardsHeld; i++)
 	{
 		// Calculate the card's x-position by starting from startX
 		float xPos = startX + i * (CARD_WIDTH + SPACING);
@@ -108,7 +108,7 @@ void Hand::remakeHand()
 
 	int newCardsHeld = 0;
 
-	for (int i = 0; i < CardManager::cardsHeld; i++)
+	for (int i = 0; i < Card::cardsHeld; i++)
 	{
 		if (cards[i].active)
 		{
@@ -119,9 +119,9 @@ void Hand::remakeHand()
 		}
 	}
 
-	CardManager::cardsHeld = newCardsHeld;
+	Card::cardsHeld = newCardsHeld;
 	
-	for (int i = 0; i < CardManager::cardsHeld; i++)
+	for (int i = 0; i < Card::cardsHeld; i++)
 	{
 		cards[i] = newHand[i];
 	}

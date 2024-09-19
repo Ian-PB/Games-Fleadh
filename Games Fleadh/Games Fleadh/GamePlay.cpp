@@ -87,7 +87,7 @@ void GamePlay::processMouseDown(sf::Event t_event)
 		if (endTurnButton.checkForMouse())
 		{
 			// Can draw cards == false;
-			std::cout << "Enemy Turn \n";
+			std::cout << "Enemy Turn: \n";
 
 			BattleManager::endTurn();
 		}
@@ -138,8 +138,11 @@ void GamePlay::setupObjects()
 	// Load all the cards into the game
 	Card::loadCardData();
 
-	// Load all enemies
-	Enemy::loadEnemies();
+	// Setup Enemy (TEMP)
+	for (int i = 0; i < BattleManager::enemyAmount; i++)
+	{
+		BattleManager::currentEnemies[i].setupEnemy(Era::Prehistoric);
+	}
 
 
 	// Buttons

@@ -6,21 +6,29 @@
 #include <json.hpp>
 
 
-#include "Global.h"
 
-struct Action
+#include "Card.h"
+
+
+
+
+
+enum class Era
 {
-	int damage = 0;
-
-	void (*actionEffects[MAX_EFFECTS])();
-	int amountOfEffects = 0;
+	None,
+	Prehistoric,
+	Medieval,
+	Modern,
+	Futuristic
 };
+
+
 
 class Enemy
 {
 public:
 	Enemy();
-	static void loadEnemies();
+	void setupEnemy(Era t_era);
 
 	void draw(sf::RenderWindow& t_window);
 
@@ -31,9 +39,8 @@ public:
 
 private:
 
-	void addEffects(std::string t_effects[], int t_actionToAddTo);
 
-	int amountOfActions = 0;
+	int amountOfCards = 0;
 
 	// Hitbox (TEMP)
 	sf::RectangleShape body;
@@ -47,7 +54,9 @@ private:
 	std::string name = "";
 	int maxHealth = 100;
 	int health = maxHealth;
-	Action actions[MAX_ACTIONS];
+
+	
+	Card actionCards[MAX_ENEMY_CARDS];
 
 };
 
