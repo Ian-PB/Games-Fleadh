@@ -42,6 +42,7 @@ void Enemy::setupEnemy(Era t_era)
 			// Upgrade the card to be of the Medieval era
 			actionCards[i].upgradeTo(1);
 		}
+
 		break;
 
 	case Era::Modern:
