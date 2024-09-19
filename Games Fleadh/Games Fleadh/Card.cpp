@@ -7,10 +7,6 @@ std::vector<Card> Card::allCards;
 
 Card::Card()
 {
-    // Static variable
-    cardsHeld = 0;
-
-
 	body.setFillColor(sf::Color::White);
 	body.setSize({ (float)width, (float)height });
 	body.setOrigin({ (float)width / 2, (float)height / 2 });

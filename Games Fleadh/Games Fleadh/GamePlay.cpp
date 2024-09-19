@@ -141,7 +141,7 @@ void GamePlay::setupObjects()
 	// Setup Enemy (TEMP)
 	for (int i = 0; i < BattleManager::enemyAmount; i++)
 	{
-		BattleManager::currentEnemies[i].setupEnemy(Era::Prehistoric);
+		BattleManager::currentEnemies[i].setupEnemy(Era::Futuristic);
 	}
 
 
