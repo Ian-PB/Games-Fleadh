@@ -19,6 +19,6 @@ void Player::takeDamage(int t_damage)
 	{
 		alive = false;
 
-		std::cout << "I AM DEAD \n";
+		std::cout << "PLAYER IS DEAD \n";
 	}
 }

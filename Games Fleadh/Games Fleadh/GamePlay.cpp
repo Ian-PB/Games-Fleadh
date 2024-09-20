@@ -125,7 +125,6 @@ void GamePlay::render(sf::RenderWindow& t_window)
 	{
 		BattleManager::currentEnemies[i].draw(t_window);
 	}
-
 }
 
 
@@ -137,6 +136,9 @@ void GamePlay::setupObjects()
 {
 	// Load all the cards into the game
 	Card::loadCardData();
+
+	// Deck
+	Deck::fillDeckRand();
 
 	// Setup Enemy (TEMP)
 	for (int i = 0; i < BattleManager::enemyAmount; i++)
@@ -151,8 +153,5 @@ void GamePlay::setupObjects()
 
 	// Cards
 	hand.startingDraw();
-
-
-	// Deck
-	Deck::fillDeckRand();
+	
 }
