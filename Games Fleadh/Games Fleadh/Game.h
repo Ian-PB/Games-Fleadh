@@ -17,7 +17,7 @@
 // #include "MainMenu.h"
 // #include "Shop.h"
 
-#include "Global.h"
+
 #include "GamePlay.h"
 #include "Map.h"
 #include "SceneManager.h"

@@ -12,13 +12,14 @@
 /// load and setup thne image
 /// </summary>
 Game::Game() :
-	m_window{ sf::VideoMode{ SCREEN_WIDTH, SCREEN_HEIGHT, 32U }, "SFML Game" },
+	m_window{ sf::VideoMode::getDesktopMode(), "SFML Game", sf::Style::Fullscreen },
 	m_exitGame{ false } //when true game will exit
 {
 	setupFontAndText(); // load font 
 
-	SceneManager::currentScene = Scenes::Map;
+	SceneManager::currentScene = Scenes::GamePlay;
 }
+
 
 /// <summary>
 /// default destructor we didn't dynamically allocate anything
@@ -65,9 +66,10 @@ void Game::processEvents()
 	sf::Event newEvent;
 	while (m_window.pollEvent(newEvent))
 	{
-		if (sf::Event::Closed == newEvent.type) // window message
+		// Close the game (TEMP)
+		if (sf::Keyboard::Escape == newEvent.key.code)
 		{
-			m_exitGame = true;
+			m_window.close();
 		}
 
 		// Check which scene you are in and do the processEvents() of that scene

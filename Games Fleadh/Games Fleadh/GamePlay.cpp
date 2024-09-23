@@ -7,6 +7,7 @@
 
 #include "GamePlay.h"
 #include <iostream>
+#include "BattleManager.h"
 
 
 
@@ -60,6 +61,8 @@ void GamePlay::processEvents(sf::Event t_event)
 /// <param name="t_event">key press event</param>
 void GamePlay::processKeys(sf::Event t_event)
 {
+	
+
 	// Draw a card  (TEMP)
 	if (sf::Keyboard::Space == t_event.key.code)
 	{
