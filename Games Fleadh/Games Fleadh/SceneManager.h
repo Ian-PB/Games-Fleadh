@@ -9,7 +9,8 @@ enum class Scenes
 	SplashScreen,
 	MainMenu,
 	Shop,
-	GamePlay
+	GamePlay,
+	Map
 };
 
 

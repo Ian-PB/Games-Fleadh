@@ -21,7 +21,8 @@ const int MAX_HAND_SIZE = 10;
 const int MAX_DECK_SIZE = 100;
 const int DEFAULT_DECK_SIZE = 15;
 
-
+// Map info
+const int MAX_RINGS = 7;
 
 class MouseManager
 {

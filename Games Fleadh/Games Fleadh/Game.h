@@ -19,6 +19,7 @@
 
 #include "Global.h"
 #include "GamePlay.h"
+#include "Map.h"
 #include "SceneManager.h"
 
 
@@ -52,6 +53,7 @@ private:
 	//Shop shop;
 	//CharacterSelect characterSelect;
 	GamePlay gameplay;
+	Map map;
 
 };
 

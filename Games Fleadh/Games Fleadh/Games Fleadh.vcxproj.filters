@@ -36,9 +36,6 @@
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Game.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="BattleManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -71,6 +68,12 @@
     </ClCompile>
     <ClCompile Include="Player.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Map.cpp">
+      <Filter>Source Files\Scene-Based-Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="Game.cpp">
+      <Filter>Source Files\Scene-Based-Classes</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -106,6 +109,9 @@
     </ClInclude>
     <ClInclude Include="Player.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Map.h">
+      <Filter>Header Files\Scene-Based-Classes</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

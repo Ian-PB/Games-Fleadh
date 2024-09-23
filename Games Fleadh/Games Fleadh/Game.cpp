@@ -17,7 +17,7 @@ Game::Game() :
 {
 	setupFontAndText(); // load font 
 
-	SceneManager::currentScene = Scenes::GamePlay;
+	SceneManager::currentScene = Scenes::Map;
 }
 
 /// <summary>
@@ -76,9 +76,9 @@ void Game::processEvents()
 		case Scenes::None:
 			break;
 
-		//case Scenes::SplashScreen:
-		//	splashScreen.processEvents(newEvent);
-		//	break;
+		case Scenes::Map:
+			map.processEvents(newEvent);
+			break;
 
 		//case Scene::MainMenu:
 		//	mainMenu.processEvents(newEvent);
@@ -129,9 +129,9 @@ void Game::update(sf::Time t_deltaTime)
 	case Scenes::None:
 		break;
 
-	//case Scenes::SplashScreen:
-	//	splashScreen.update(t_deltaTime);
-	//	break;
+	case Scenes::Map:
+		map.update(t_deltaTime);
+		break;
 
 	//case Scenes::MainMenu:
 	//	mainMenu.update(t_deltaTime);
@@ -164,9 +164,9 @@ void Game::render()
 	case Scenes::None:
 		break;
 
-	//case Scenes::SplashScreen:
-	//	splashScreen.render(m_window);
-	//	break;
+	case Scenes::Map:
+		map.render(m_window);
+		break;
 
 	//case Scenes::MainMenu:
 	//	mainMenu.render(m_window);
