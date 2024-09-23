@@ -1,13 +1,13 @@
 #include <SFML/Graphics.hpp>
 
 #include <iostream>
+#include "Global.h"
 #include "Button.h"
+#include "BattleManager.h"
 // Cards
 #include "Hand.h"
 // Enemies
 #include "Enemy.h"
-
-
 
 
 class GamePlay

@@ -2,8 +2,8 @@
 
 #include <SFML/Graphics.hpp>
 
-const unsigned int SCREEN_WIDTH = sf::VideoMode::getDesktopMode().width;
-const unsigned int SCREEN_HEIGHT = sf::VideoMode::getDesktopMode().height;
+const int SCREEN_WIDTH = 1200;
+const int SCREEN_HEIGHT = 800;
 
 // Player info
 const int MAX_PLAYERS = 4;

@@ -7,7 +7,7 @@ Enemy::Enemy()
 	body.setSize({ (float)SIZE, (float)SIZE });
 	body.setOrigin({ SIZE / 2.0f, SIZE / 2.0f });
 
-	body.setPosition({ (SCREEN_WIDTH / 4.0f) * 3, SCREEN_HEIGHT / 4.0f });
+	body.setPosition({ (SCREEN_WIDTH / 4) * 3, SCREEN_HEIGHT / 4 });
 }
 
 void Enemy::setupEnemy(Era t_era)
