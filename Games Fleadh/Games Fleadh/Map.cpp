@@ -64,9 +64,9 @@ void Map::processMouseUp(sf::Event t_event)
 void Map::setupObjects()
 {
 	// Setup Visual Rings
-	for (int i = 0; i < MAX_RINGS; i++)
+	for (int i = 1; i < MAX_RINGS; i++)
 	{
-		float newRadius = (i * 75) + 50;
+		float newRadius = (i * 80) + 35;
 
 		rings[i].setRadius(newRadius);
 		rings[i].setOrigin(newRadius, newRadius);

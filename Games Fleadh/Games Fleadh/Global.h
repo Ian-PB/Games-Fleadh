@@ -2,8 +2,8 @@
 
 #include <SFML/Graphics.hpp>
 
-const int SCREEN_WIDTH = 1200;
-const int SCREEN_HEIGHT = 800;
+const int SCREEN_WIDTH = 1600;
+const int SCREEN_HEIGHT = 1000;
 
 // Player info
 const int MAX_PLAYERS = 4;
@@ -22,7 +22,7 @@ const int MAX_DECK_SIZE = 100;
 const int DEFAULT_DECK_SIZE = 15;
 
 // Map info
-const int MAX_RINGS = 7;
+const int MAX_RINGS = 6;
 
 class MouseManager
 {
