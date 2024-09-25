@@ -1,6 +1,7 @@
 #pragma once
 
 #include <SFML/Graphics.hpp>
+#include "Global.h"
 
 class Encounter
 {
@@ -13,6 +14,9 @@ public:
 	sf::Vector2f getPos() { return position; }
 
 	bool active = false;
+
+	// Closest encounters
+	Encounter* closest[MAX_CLOSEST_ENCOUNTERS] = {};
 
 private:
 

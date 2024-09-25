@@ -28,10 +28,15 @@ private:
 
 	// Encounter positions
 	void getEncounterPositions();
+	void findEachEncountersClosest();
 	// Path Creation
 	void createPaths();
 	sf::VertexArray path;
 	float getRadians(float t_degrees) { return t_degrees * PI / 180.0f; }
 	void setupObjects();
+
+
+	// Maths equations
+	float vectorLenght(sf::Vector2f t_a, sf::Vector2f t_b) { return (sqrt((t_b.x - t_a.x) * (t_b.x - t_a.x) + (t_b.y - t_a.y) * (t_b.y - t_a.y))); }
 };
 

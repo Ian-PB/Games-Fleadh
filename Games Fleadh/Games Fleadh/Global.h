@@ -27,6 +27,7 @@ const int DEFAULT_DECK_SIZE = 15;
 // Map info
 const int MAX_RINGS = 5;
 const int MAX_ENCOUNTERS_PER_RING = 16;
+const int MAX_CLOSEST_ENCOUNTERS = 3;
 
 class MouseManager
 {

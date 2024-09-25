@@ -6,7 +6,7 @@ Map::Map()
 
 	setupObjects();
 
-	path.setPrimitiveType(sf::LineStrip);
+	path.setPrimitiveType(sf::Lines);
 }
 
 void Map::update(sf::Time t_deltaTime)
@@ -15,7 +15,7 @@ void Map::update(sf::Time t_deltaTime)
 
 void Map::render(sf::RenderWindow& t_window)
 {
-	//t_window.draw(path);
+	t_window.draw(path);
 
 	// Rings
 	for (int i = 0; i < MAX_RINGS; i++)
@@ -130,21 +130,79 @@ void Map::getEncounterPositions()
 	}
 }
 
-void Map::createPaths()
+void Map::findEachEncountersClosest()
 {
-	path.clear();
-
-	// Connects all active planets
-	for (int i = 0; i < MAX_RINGS; i++)
+	for (int i = MAX_RINGS - 1; i >= 0; i--)
 	{
 		for (int e = 0; e < MAX_ENCOUNTERS_PER_RING; e++)
 		{
+			int shortestDistIndexes[MAX_CLOSEST_ENCOUNTERS] = {};
+			float shortestDist[MAX_CLOSEST_ENCOUNTERS] = { 1000000, 1000000, 1000000 };
+
 			if (rings[i].encounters[e].active)
 			{
-				path.append(rings[i].encounters[e].getPos());
+				sf::Vector2f currentEncounterPos = rings[i].encounters[e].getPos();
+
+				if (i != MAX_RINGS - 1)
+				{
+					// Check the distance of all encounters in the next ring
+					for (int n = 0; n < MAX_ENCOUNTERS_PER_RING; n++)
+					{
+						if (rings[i - 1].encounters[n].active)
+						{
+							float newDist = vectorLenght(currentEncounterPos, rings[i - 1].encounters[n].getPos());
+
+							for (int c = 0; c < MAX_CLOSEST_ENCOUNTERS; c++)
+							{
+								if (newDist < shortestDist[c])
+								{
+									shortestDist[c] = newDist;
+									shortestDistIndexes[c] = n;
+								}
+							}
+						}
+					}
+				}
+			}
+
+			// Set the closest encounters to this encounter
+			for (int c = 0; c < MAX_CLOSEST_ENCOUNTERS; c++)
+			{
+				rings[i].encounters[e].closest[c] = &rings[i - 1].encounters[c];
 			}
 		}
 	}
+}
+
+void Map::createPaths()
+{
+	// Find closest to each encounter first
+	findEachEncountersClosest();
+
+
+	path.clear();
+
+
+	for (int i = MAX_RINGS - 1; i >= 0; i--)
+	{
+		for (int e = 0; e < MAX_ENCOUNTERS_PER_RING; e++)
+		{
+			for (int c = 0; c < MAX_CLOSEST_ENCOUNTERS; c++)
+			{
+				// Starting point of the path between encounter
+				sf::Vector2f start = rings[i].encounters[e].getPos();
+
+				// Closest planet (1 -> 3)
+				sf::Vector2f end = rings[i].encounters[e].closest[c]->getPos();
+
+				std::cout << start.x << ", " << start.y << " -> " << end.x << ", " << end.y << std::endl;
+
+				path.append(start);
+				path.append(end);
+			}
+		}
+	}
+	
 
 
 	if (path.getVertexCount() > 0) // Make sure its not below or equal to 0
