@@ -5,6 +5,8 @@ Map::Map()
 	srand(time(nullptr));
 
 	setupObjects();
+
+	path.setPrimitiveType(sf::LineStrip);
 }
 
 void Map::update(sf::Time t_deltaTime)
@@ -13,11 +15,14 @@ void Map::update(sf::Time t_deltaTime)
 
 void Map::render(sf::RenderWindow& t_window)
 {
+	t_window.draw(path);
+
 	// Rings
 	for (int i = 0; i < MAX_RINGS; i++)
 	{
-		t_window.draw(rings[i]);
+		rings[i].draw(t_window);
 	}
+
 	// Encounters
 	for (int i = 0; i < MAX_ENCOUNTERS; i++)
 	{
@@ -54,7 +59,10 @@ void Map::processKeys(sf::Event t_event)
 	// remake map  (TEMP)
 	if (sf::Keyboard::Space == t_event.key.code)
 	{
+		// Encounters
 		getEncounterPositions();
+		// Path
+		createPaths();
 	}
 }
 
@@ -78,12 +86,13 @@ void Map::getEncounterPositions()
 	int currentEncounter = 0;
 	int maxEncountersPerRing = 0;
 
+
 	for (int ring = 1; ring < MAX_RINGS; ring++)
 	{
 		// Make sure the last ring always has at least 4 encounters
 		if (ring == 1)
 		{
-			maxEncountersPerRing = 4;
+			maxEncountersPerRing = 6;
 		}
 		else
 		{
@@ -98,43 +107,47 @@ void Map::getEncounterPositions()
 				encounters[currentEncounter].active = true;
 
 				sf::Vector2f encounterPos;
-				float posDisplacement = (rand() % 20) - 10; // Between 0 and 9 degrees turned to radians
+				float posDisplacement = (rand() % 10) - 5; 
 
 				encounterPos.x = (SCREEN_WIDTH / 2.0f) + rings[ring].getRadius() * cos((getRadians(angleOnRing + posDisplacement)));
 				encounterPos.y = (SCREEN_HEIGHT / 2.0f) + rings[ring].getRadius() * sin((getRadians(angleOnRing + posDisplacement)));
 
 
 				encounters[currentEncounter].setPos(encounterPos);
-				
 			}
 			else
 			{
 				// Dont activate and dont calculate pos
 				encounters[currentEncounter].active = false;
 			}
+
 			currentEncounter++;
 		}
 	}
 }
 
+void Map::createPaths()
+{
+	path.clear();
+
+	// Connects all active planets
+	for (int i = 0; i < MAX_ENCOUNTERS; i++)
+	{
+		if (encounters[i].active)
+		{
+			path.append(encounters[i].getPos());
+		}
+	}
+
+
+
+	for (int i = 0; i < path.getVertexCount() - 1; i++)
+	{
+		path[i].color = sf::Color::Magenta;
+	}
+}
+
 void Map::setupObjects()
 {
-
-	// Setup Visual Rings
-	for (int i = 1; i < MAX_RINGS; i++)
-	{
-		float newRadius = (i * 80) + 35;
-
-		rings[i].setRadius(newRadius);
-		rings[i].setOrigin(newRadius, newRadius);
-
-		rings[i].setFillColor(sf::Color::Transparent);
-		rings[i].setOutlineThickness(5);
-		rings[i].setOutlineColor(sf::Color::White);
-
-		rings[i].setPosition({ SCREEN_WIDTH / 2.0f, SCREEN_HEIGHT / 2.0f });
-
-		rings[i].setPointCount(50);
-
-	}
+	
 }

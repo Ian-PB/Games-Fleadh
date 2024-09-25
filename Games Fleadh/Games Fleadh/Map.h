@@ -3,6 +3,7 @@
 #include <iostream>
 #include "Global.h"
 #include "Encounter.h"
+#include "Ring.h"
 
 class Map
 {
@@ -21,16 +22,18 @@ private:
 	void processMouseUp(sf::Event t_event);
 
 	// Ring visuals
-	sf::CircleShape rings[MAX_RINGS];
+	Ring rings[MAX_RINGS];
 	int ringRadii[MAX_RINGS];
 
 	// Encounters (TEMP)
 	Encounter encounters[MAX_ENCOUNTERS];
 	int amountOfEncounters = 0;
 
-	// Area positions
+	// Encounter positions
 	void getEncounterPositions();
-
+	// Path Creation
+	void createPaths();
+	sf::VertexArray path;
 	float getRadians(float t_degrees) { return t_degrees * PI / 180.0f; }
 	void setupObjects();
 };

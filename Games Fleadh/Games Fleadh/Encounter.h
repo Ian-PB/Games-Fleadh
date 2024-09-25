@@ -10,6 +10,7 @@ public:
 	void draw(sf::RenderWindow& t_window);
 
 	void setPos(sf::Vector2f t_pos) { position = t_pos; body.setPosition(position); }
+	sf::Vector2f getPos() { return position; }
 
 	bool active = false;
 
