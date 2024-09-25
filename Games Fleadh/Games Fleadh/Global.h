@@ -5,6 +5,9 @@
 const int SCREEN_WIDTH = 1600;
 const int SCREEN_HEIGHT = 1000;
 
+// Maths
+const float PI = 3.14159265359;
+
 // Player info
 const int MAX_PLAYERS = 4;
 
@@ -23,6 +26,7 @@ const int DEFAULT_DECK_SIZE = 15;
 
 // Map info
 const int MAX_RINGS = 6;
+const int MAX_ENCOUNTERS = 80;
 
 class MouseManager
 {

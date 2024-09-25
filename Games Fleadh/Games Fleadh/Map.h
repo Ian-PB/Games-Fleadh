@@ -2,6 +2,7 @@
 
 #include <iostream>
 #include "Global.h"
+#include "Encounter.h"
 
 class Map
 {
@@ -23,7 +24,14 @@ private:
 	sf::CircleShape rings[MAX_RINGS];
 	int ringRadii[MAX_RINGS];
 
+	// Encounters (TEMP)
+	Encounter encounters[MAX_ENCOUNTERS];
+	int amountOfEncounters = 0;
 
+	// Area positions
+	void getEncounterPositions();
+
+	float getRadians(float t_degrees) { return t_degrees * PI / 180.0f; }
 	void setupObjects();
 };
 
