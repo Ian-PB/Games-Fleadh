@@ -1,6 +1,8 @@
 #pragma once
 
 #include <SFML/Graphics.hpp>
+#include "Global.h"
+#include "Encounter.h"
 
 class Ring
 {
@@ -11,6 +13,8 @@ public:
 	void draw(sf::RenderWindow& t_window);
 
 	void setBody(int t_radius, sf::Vector2f t_pos);
+
+	Encounter encounters[MAX_ENCOUNTERS_PER_RING];
 
 
 private:
