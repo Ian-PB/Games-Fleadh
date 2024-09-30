@@ -63,7 +63,8 @@ void Map::processKeys(sf::Event t_event)
 		// Encounters
 		getEncounterPositions();
 		// Path
-		createPaths();
+		findEachEncountersClosest(); // TEMP
+		//createPaths();
 	}
 }
 
@@ -132,52 +133,46 @@ void Map::getEncounterPositions()
 
 void Map::findEachEncountersClosest()
 {
+	// Go through each ring backwards
 	for (int i = MAX_RINGS - 1; i >= 0; i--)
 	{
+		// Go through each encounter on i ring
 		for (int e = 0; e < MAX_ENCOUNTERS_PER_RING; e++)
 		{
-			int shortestDistIndexes[MAX_CLOSEST_ENCOUNTERS] = {};
-			float shortestDist[MAX_CLOSEST_ENCOUNTERS] = { 1000000, 1000000, 1000000 };
-
-			if (rings[i].encounters[e].active)
+			if (i != 0)
 			{
-				sf::Vector2f currentEncounterPos = rings[i].encounters[e].getPos();
-
-				if (i != MAX_RINGS - 1)
+				// Check if its the first one
+				if (e == 0)
 				{
-					// Check the distance of all encounters in the next ring
-					for (int n = 0; n < MAX_ENCOUNTERS_PER_RING; n++)
-					{
-						if (rings[i - 1].encounters[n].active)
-						{
-							float newDist = vectorLenght(currentEncounterPos, rings[i - 1].encounters[n].getPos());
-
-							for (int c = 0; c < MAX_CLOSEST_ENCOUNTERS; c++)
-							{
-								if (newDist < shortestDist[c])
-								{
-									shortestDist[c] = newDist;
-									shortestDistIndexes[c] = n;
-								}
-							}
-						}
-					}
+					rings[i].encounters[e].closest[0] = &rings[i + 1].encounters[MAX_ENCOUNTERS_PER_RING - 1];
 				}
-			}
+				else
+				{
+					rings[i].encounters[e].closest[0] = &rings[i + 1].encounters[e - 1];
+				}
 
-			// Set the closest encounters to this encounter
-			for (int c = 0; c < MAX_CLOSEST_ENCOUNTERS; c++)
-			{
-				rings[i].encounters[e].closest[c] = &rings[i - 1].encounters[c];
+				// Checks the one straight ahead
+				rings[i].encounters[e].closest[1] = &rings[i + 1].encounters[e];
+
+				// Check if its the last one
+				if (e == MAX_ENCOUNTERS_PER_RING - 1)
+				{
+					rings[i].encounters[e].closest[2] = &rings[i + 1].encounters[0];
+				}
+				else
+				{
+					rings[i].encounters[e].closest[2] = &rings[i + 1].encounters[e + 1];
+				}
 			}
 		}
 	}
+
 }
 
 void Map::createPaths()
 {
 	// Find closest to each encounter first
-	findEachEncountersClosest();
+	//findEachEncountersClosest();
 
 
 	path.clear();
@@ -223,4 +218,6 @@ void Map::setupObjects()
 
 		rings[i].setBody(newRadius, { SCREEN_WIDTH / 2.0f, SCREEN_HEIGHT / 2.0f });
 	}
+
+	getEncounterPositions();
 }
