@@ -11,12 +11,12 @@ public:
 	void draw(sf::RenderWindow& t_window);
 
 	void setPos(sf::Vector2f t_pos) { position = t_pos; body.setPosition(position); }
-	sf::Vector2f getPos() { return position; }
+	sf::Vector2f getPos() const { return position; }
 
 	bool active = false;
 
 	// Closest encounters
-	Encounter* closest[MAX_CLOSEST_ENCOUNTERS] = {};
+	sf::Vector2f closest[MAX_CLOSEST_ENCOUNTERS];
 
 private:
 

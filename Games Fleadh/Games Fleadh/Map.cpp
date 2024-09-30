@@ -144,24 +144,24 @@ void Map::findEachEncountersClosest()
 				// Check if its the first one
 				if (e == 0)
 				{
-					rings[i].encounters[e].closest[0] = &rings[i + 1].encounters[MAX_ENCOUNTERS_PER_RING - 1];
+					rings[i].encounters[e].closest[0] = rings[i + 1].encounters[MAX_ENCOUNTERS_PER_RING - 1].getPos();
 				}
 				else
 				{
-					rings[i].encounters[e].closest[0] = &rings[i + 1].encounters[e - 1];
+					rings[i].encounters[e].closest[0] = rings[i + 1].encounters[e - 1].getPos();
 				}
 
 				// Checks the one straight ahead
-				rings[i].encounters[e].closest[1] = &rings[i + 1].encounters[e];
+				rings[i].encounters[e].closest[1] = rings[i + 1].encounters[e].getPos();
 
 				// Check if its the last one
 				if (e == MAX_ENCOUNTERS_PER_RING - 1)
 				{
-					rings[i].encounters[e].closest[2] = &rings[i + 1].encounters[0];
+					rings[i].encounters[e].closest[2] = rings[i + 1].encounters[0].getPos();
 				}
 				else
 				{
-					rings[i].encounters[e].closest[2] = &rings[i + 1].encounters[e + 1];
+					rings[i].encounters[e].closest[2] = rings[i + 1].encounters[e + 1].getPos();
 				}
 			}
 		}
@@ -188,7 +188,7 @@ void Map::createPaths()
 				sf::Vector2f start = rings[i].encounters[e].getPos();
 
 				// Closest planet (1 -> 3)
-				sf::Vector2f end = rings[i].encounters[e].closest[c]->getPos();
+				sf::Vector2f end = rings[i].encounters[e].closest[c];
 
 				std::cout << start.x << ", " << start.y << " -> " << end.x << ", " << end.y << std::endl;
 
