@@ -29,6 +29,7 @@ private:
 	// Encounter positions
 	void getEncounterPositions();
 	void findEachEncountersClosest();
+
 	// Path Creation
 	void createPaths();
 	sf::VertexArray path;

@@ -18,11 +18,6 @@ public:
 
 	// Closest encounters
 	Encounter *closest[MAX_CLOSEST_ENCOUNTERS];
-	sf::Vector2f closestPos[MAX_CLOSEST_ENCOUNTERS];
-	void setClosestEncounters(Encounter* t_closest[MAX_CLOSEST_ENCOUNTERS], sf::Vector2f t_closestPos[MAX_CLOSEST_ENCOUNTERS]);
-
-	// Print the closest encounters' positions
-	void printClosestEncounters() const; 
 
 
 private:
