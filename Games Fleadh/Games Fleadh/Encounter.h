@@ -2,6 +2,7 @@
 
 #include <SFML/Graphics.hpp>
 #include "Global.h"
+#include <iostream>
 
 class Encounter
 {
@@ -10,13 +11,19 @@ public:
 
 	void draw(sf::RenderWindow& t_window);
 
-	void setPos(sf::Vector2f t_pos) { position = t_pos; body.setPosition(position); }
+	void setPos(sf::Vector2f t_pos);
 	sf::Vector2f getPos() const { return position; }
 
 	bool active = false;
 
 	// Closest encounters
-	sf::Vector2f closest[MAX_CLOSEST_ENCOUNTERS];
+	Encounter *closest[MAX_CLOSEST_ENCOUNTERS];
+	sf::Vector2f closestPos[MAX_CLOSEST_ENCOUNTERS];
+	void setClosestEncounters(Encounter* t_closest[MAX_CLOSEST_ENCOUNTERS], sf::Vector2f t_closestPos[MAX_CLOSEST_ENCOUNTERS]);
+
+	// Print the closest encounters' positions
+	void printClosestEncounters() const; 
+
 
 private:
 

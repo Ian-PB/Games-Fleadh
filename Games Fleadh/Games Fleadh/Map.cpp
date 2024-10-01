@@ -63,8 +63,7 @@ void Map::processKeys(sf::Event t_event)
 		// Encounters
 		getEncounterPositions();
 		// Path
-		findEachEncountersClosest(); // TEMP
-		//createPaths();
+		createPaths();
 	}
 }
 
@@ -104,7 +103,7 @@ void Map::getEncounterPositions()
 		for (float angleOnRing = 0; angleOnRing < 360; angleOnRing += 360.0f / maxEncountersPerRing)
 		{
 			// Set active or inactive
-			if (rand() % 10 >= 6)
+			if (rand() % 10 >= 0) // Ment to be 6
 			{
 				rings[ring].encounters[currentEncounter].active = true;
 
@@ -134,70 +133,107 @@ void Map::getEncounterPositions()
 void Map::findEachEncountersClosest()
 {
 	// Go through each ring backwards
-	for (int i = MAX_RINGS - 1; i >= 0; i--)
+	for (int r = MAX_RINGS - 1; r >= 0; r--)
 	{
-		// Go through each encounter on i ring
-		for (int e = 0; e < MAX_ENCOUNTERS_PER_RING; e++)
+		// Check if its the last ring
+		if (r > 1)
 		{
-			if (i != 0)
+			// Go through each encounter on r ring
+			for (int e = 0; e < MAX_ENCOUNTERS_PER_RING; e++)
 			{
-				// Check if its the first one
-				if (e == 0)
+				// Check if it's active
+				if (rings[r].encounters[e].active)
 				{
-					rings[i].encounters[e].closest[0] = rings[i + 1].encounters[MAX_ENCOUNTERS_PER_RING - 1].getPos();
-				}
-				else
-				{
-					rings[i].encounters[e].closest[0] = rings[i + 1].encounters[e - 1].getPos();
-				}
+					// Go through each closest encounter on the current ring
+					for (int c = 0; c < MAX_CLOSEST_ENCOUNTERS; c++)
+					{
+						// Check the encounter to the left
+						if (e == 0)
+						{
+							if (rings[r - 1].encounters[MAX_CLOSEST_ENCOUNTERS - 1].active)
+							{
+								rings[r].encounters[e].closestPos[0] = rings[r - 1].encounters[MAX_ENCOUNTERS_PER_RING - 1].getPos();
+							}
+						}
+						else
+						{
+							if (rings[r - 1].encounters[e - 1].active)
+							{
+								rings[r].encounters[e].closestPos[0] = rings[r - 1].encounters[e - 1].getPos();
+							}
+						}
 
-				// Checks the one straight ahead
-				rings[i].encounters[e].closest[1] = rings[i + 1].encounters[e].getPos();
 
-				// Check if its the last one
-				if (e == MAX_ENCOUNTERS_PER_RING - 1)
-				{
-					rings[i].encounters[e].closest[2] = rings[i + 1].encounters[0].getPos();
-				}
-				else
-				{
-					rings[i].encounters[e].closest[2] = rings[i + 1].encounters[e + 1].getPos();
+
+						// Check the encounter straight ahead
+						if (rings[r - 1].encounters[e].active)
+						{
+							rings[r].encounters[e].closestPos[1] = rings[r - 1].encounters[e].getPos();
+							//std::cout << rings[r].encounters[e].closestPos[1].x << ", " << rings[r].encounters[e].closestPos[1].y << std::endl;
+						}
+
+
+
+						// Check the encounter to the right
+						if (e == MAX_ENCOUNTERS_PER_RING - 1)
+						{
+							if (rings[r - 1].encounters[0].active)
+							{
+								rings[r].encounters[e].closestPos[2] = rings[r - 1].encounters[0].getPos();
+							}
+						}
+						else
+						{
+							if (rings[r - 1].encounters[e + 1].active)
+							{
+								rings[r].encounters[e].closestPos[2] = rings[r - 1].encounters[e + 1].getPos();
+							}
+						}
+					}
 				}
 			}
 		}
 	}
-
 }
+
 
 void Map::createPaths()
 {
 	// Find closest to each encounter first
-	//findEachEncountersClosest();
+	findEachEncountersClosest();
 
 
 	path.clear();
 
+	sf::Vector2f screenCentre = { SCREEN_WIDTH / 2.0f, SCREEN_HEIGHT / 2.0f };
 
-	for (int i = MAX_RINGS - 1; i >= 0; i--)
+	// TEST OF CONECTIVES
+	// Go through each ring backwards
+	for (int r = MAX_RINGS - 1; r >= 0; r--)
 	{
-		for (int e = 0; e < MAX_ENCOUNTERS_PER_RING; e++)
+		// Check if its the last ring
+		if (r > 1)
 		{
-			for (int c = 0; c < MAX_CLOSEST_ENCOUNTERS; c++)
+			// Go through each encounter on r ring
+			for (int e = 0; e < MAX_ENCOUNTERS_PER_RING; e++)
 			{
-				// Starting point of the path between encounter
-				sf::Vector2f start = rings[i].encounters[e].getPos();
+				// Check if it's active
+				if (rings[r].encounters[e].active)
+				{
+					// Go through each closest encounter on the current ring
+					for (int c = 0; c < MAX_CLOSEST_ENCOUNTERS; c++)
+					{
+						path.append(rings[r].encounters[e].getPos());
+						std::cout << rings[r].encounters[e].getPos().x << ", " << rings[r].encounters[e].getPos().y << " --> ";
 
-				// Closest planet (1 -> 3)
-				sf::Vector2f end = rings[i].encounters[e].closest[c];
-
-				std::cout << start.x << ", " << start.y << " -> " << end.x << ", " << end.y << std::endl;
-
-				path.append(start);
-				path.append(end);
+						path.append(rings[r].encounters[e].closestPos[c]);
+						std::cout << rings[r].encounters[e].closestPos[c].x << ", " << rings[r].encounters[e].closestPos[c].y << "\n";
+					}
+				}
 			}
 		}
 	}
-	
+
 
 
 	if (path.getVertexCount() > 0) // Make sure its not below or equal to 0
