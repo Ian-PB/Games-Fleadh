@@ -17,6 +17,7 @@ public:
 	bool active = false;
 
 	// Closest encounters
+	bool checkClosestAmount(); // If this returns false then that means that there is no closest encounters attached to this obj
 	Encounter *closest[MAX_CLOSEST_ENCOUNTERS];
 
 
@@ -26,5 +27,10 @@ private:
 	int radius = 20;
 
 	sf::Vector2f position;
+
+
+	// Colors
+	sf::Color isolatedEncounter = {120, 120, 120, 255};
+	sf::Color normalEncounter = sf::Color::Cyan;
 };
 

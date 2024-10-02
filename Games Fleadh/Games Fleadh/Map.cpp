@@ -60,10 +60,7 @@ void Map::processKeys(sf::Event t_event)
 	// remake map  (TEMP)
 	if (sf::Keyboard::Space == t_event.key.code)
 	{
-		// Encounters
-		getEncounterPositions();
-		// Path
-		createPaths();
+		setupMap();
 	}
 }
 
@@ -180,6 +177,25 @@ void Map::findEachEncountersClosest()
 	}
 }
 
+void Map::checkEncounters()
+{
+	for (int r = 0; r < MAX_RINGS; r++)
+	{
+		if (r > 1)
+		{
+			for (int e = 0; e < MAX_ENCOUNTERS_PER_RING; e++)
+			{
+				// If the encounter is active
+				if (rings[r].encounters[e].active)
+				{
+					// Check if it has a closest encounter
+					rings[r].encounters[e].checkClosestAmount();
+				}
+			}
+		}
+	}
+}
+
 
 
 
@@ -249,5 +265,16 @@ void Map::setupObjects()
 		rings[i].setBody(newRadius, { SCREEN_WIDTH / 2.0f, SCREEN_HEIGHT / 2.0f });
 	}
 
+	setupMap();
+}
+
+void Map::setupMap()
+{
+	// Setup Encounter positions
 	getEncounterPositions();
+	// Setup paths
+	createPaths();
+
+	// Check each encounter
+	checkEncounters();
 }

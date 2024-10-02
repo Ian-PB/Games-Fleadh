@@ -25,3 +25,31 @@ void Encounter::setPos(sf::Vector2f t_pos)
 	body.setPosition(position);
 }
 
+bool Encounter::checkClosestAmount()
+{
+	int closestAmount = 0;
+
+	// Count the amount of encounters which are active in the closest array
+	for (int i = 0; i < MAX_CLOSEST_ENCOUNTERS; i++)
+	{
+		if (closest[i]->active)
+		{
+			closestAmount++;
+		}
+	}
+
+
+
+	// If none are active...
+	if (closestAmount == 0)
+	{
+		body.setFillColor(isolatedEncounter);
+		return false;
+	}
+	else
+	{
+		body.setFillColor(normalEncounter);
+		return true;
+	}
+}
+

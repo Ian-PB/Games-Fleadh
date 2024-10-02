@@ -30,11 +30,17 @@ private:
 	void getEncounterPositions();
 	void findEachEncountersClosest();
 
+	// Check the type of encounter
+	void checkEncounters();
+
 	// Path Creation
 	void createPaths();
 	sf::VertexArray path;
 	float getRadians(float t_degrees) { return t_degrees * PI / 180.0f; }
 	void setupObjects();
+
+	// Setup map
+	void setupMap();
 
 
 	// Maths equations
