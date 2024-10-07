@@ -6,6 +6,7 @@
 /// </summary>
 
 #include "GamePlay.h"
+#include "SceneManager.h"
 #include <iostream>
 
 
@@ -70,6 +71,12 @@ void GamePlay::processKeys(sf::Event t_event)
 	if (sf::Keyboard::Enter == t_event.key.code)
 	{
 		hand.upgradeAllCards();
+	}
+
+	// Return to map
+	if (sf::Keyboard::Escape == t_event.key.code)
+	{
+		SceneManager::currentScene = Scenes::Map;
 	}
 }
 

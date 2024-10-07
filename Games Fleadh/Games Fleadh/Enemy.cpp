@@ -27,6 +27,9 @@ void Enemy::setup(Era t_era)
 			actionCards[i] = Card::allCards[randCard]; // Assign that card to index i of the enemies action cards
 		}
 
+		// Color
+		body.setFillColor(sf::Color::Yellow);
+
 		break;
 
 	case Era::Medieval:
@@ -39,6 +42,9 @@ void Enemy::setup(Era t_era)
 			// Upgrade the card to be of the Medieval era
 			actionCards[i].upgradeTo(1);
 		}
+
+		// Color
+		body.setFillColor(sf::Color::White);
 
 		break;
 
@@ -53,6 +59,9 @@ void Enemy::setup(Era t_era)
 			actionCards[i].upgradeTo(2);
 		}
 
+		// Color
+		body.setFillColor(sf::Color::Green);
+
 		break;
 
 	case Era::Futuristic:
@@ -65,6 +74,9 @@ void Enemy::setup(Era t_era)
 			// Upgrade the card to be of the Medieval era
 			actionCards[i].upgradeTo(3);
 		}
+
+		// Color
+		body.setFillColor(sf::Color::Blue);
 
 		break;
 	}
