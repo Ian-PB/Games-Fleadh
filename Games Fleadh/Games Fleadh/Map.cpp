@@ -1,5 +1,7 @@
 #include "Map.h"
 
+
+
 Map::Map()
 {
 	srand(time(nullptr));
@@ -69,6 +71,16 @@ void Map::processMouseMove(sf::Event t_event)
 	// Gets the position of the mouse
 	MouseManager::mousePos.x = static_cast<float>(t_event.mouseMove.x);
 	MouseManager::mousePos.y = static_cast<float>(t_event.mouseMove.y);
+
+	for (int r = 0; r < MAX_RINGS; r++)
+	{
+		for (int e = 0; e < MAX_ENCOUNTERS_PER_RING; e++)
+		{
+			rings[r].encounters[e].checkForMouse();
+
+			rings[r].encounters[e].hovering();
+		}
+	}
 }
 
 void Map::processMouseDown(sf::Event t_event)
@@ -77,12 +89,23 @@ void Map::processMouseDown(sf::Event t_event)
 
 void Map::processMouseUp(sf::Event t_event)
 {
+	for (int r = 0; r < MAX_RINGS; r++)
+	{
+		for (int e = 0; e < MAX_ENCOUNTERS_PER_RING; e++)
+		{
+			if (rings[r].encounters[e].mouseOver)
+			{
+				rings[r].encounters[e].enter();
+			}
+		}
+	}
 }
 
 void Map::getEncounterPositions()
 {
 	int currentEncounter = 0;
 	int maxEncountersPerRing = 0;
+	int spawnChance = 0;
 
 
 	for (int ring = 0; ring < MAX_RINGS; ring++)
@@ -90,17 +113,31 @@ void Map::getEncounterPositions()
 		// Make sure the last ring always has at least 4 encounters
 		if (ring == 0)
 		{
-			maxEncountersPerRing = 6;
+			maxEncountersPerRing = 4;
 		}
 		else
 		{
 			maxEncountersPerRing = 16;
 		}
 
+		// Change chance of a encounter spawning depending on the ring
+		if (ring == MAX_RINGS - 1)
+		{
+			spawnChance = 90; // 80%
+		}
+		else if (ring == 0)
+		{
+			spawnChance = 100;
+		}
+		else
+		{
+			spawnChance = 58; // 58%
+		}
+
 		for (float angleOnRing = 0; angleOnRing < 360; angleOnRing += 360.0f / maxEncountersPerRing)
 		{
 			// Set active or inactive
-			if (rand() % 10 >= 4) // Ment to be 4
+			if (rand() % 100 <= spawnChance)
 			{
 				rings[ring].encounters[currentEncounter].active = true;
 
@@ -201,10 +238,6 @@ void Map::checkEncounters()
 
 void Map::createPaths()
 {
-	// Find closest to each encounter first
-	findEachEncountersClosest();
-
-
 
 	path.clear();
 
@@ -226,7 +259,7 @@ void Map::createPaths()
 					// Go through each closest encounter on the current ring
 					for (int c = 0; c < MAX_CLOSEST_ENCOUNTERS; c++)
 					{
-						if (rings[r].encounters[e].closest[c]->active)
+						if (rings[r].encounters[e].closest[c]->active && !rings[r].encounters[e].closest[c]->isolated)
 						{
 							path.append(rings[r].encounters[e].getPos());
 							// std::cout << rings[r].encounters[e].getPos().x << ", " << rings[r].encounters[e].getPos().y << " --> ";
@@ -272,9 +305,12 @@ void Map::setupMap()
 {
 	// Setup Encounter positions
 	getEncounterPositions();
+	// Find closest to each encounter
+	findEachEncountersClosest();
+
+	// Check each encounter for isolation
+	checkEncounters();
+
 	// Setup paths
 	createPaths();
-
-	// Check each encounter
-	checkEncounters();
 }

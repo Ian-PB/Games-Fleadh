@@ -2,12 +2,17 @@
 
 #include <SFML/Graphics.hpp>
 #include "Global.h"
+#include "Enemy.h"
 #include <iostream>
+
+
 
 class Encounter
 {
 public:
 	Encounter();
+
+	void setup();
 
 	void draw(sf::RenderWindow& t_window);
 
@@ -17,8 +22,29 @@ public:
 	bool active = false;
 
 	// Closest encounters
-	bool checkClosestAmount(); // If this returns false then that means that there is no closest encounters attached to this obj
+	void checkClosestAmount(); // If this returns false then that means that there is no closest encounters attached to this obj
+	bool isolated = false;
 	Encounter *closest[MAX_CLOSEST_ENCOUNTERS];
+
+	// Interactions
+	void hovering();
+	bool checkForMouse();
+	bool mouseOver = false;
+
+	void enter();
+
+	// Encounter Data
+	enum class EncounterType
+	{
+		Battle,
+		Elite,
+		Shop,
+		Event
+	};
+	EncounterType encounterType = EncounterType::Battle;
+
+	Enemy enemy;
+	sf::Color outlineColor = sf::Color::Yellow; // Yellow = prehist, White = medieval, Green = Modern, Blue = futuristic
 
 
 private:

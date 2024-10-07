@@ -26,7 +26,7 @@ public:
 	static std::vector<Enemy> allEnemies;
 	// void setCurrentEnemies();
 	static int enemyAmount;
-	static Enemy currentEnemies[MAX_ENEMIES];
+	static Enemy currentEnemy;
 
 
 private:

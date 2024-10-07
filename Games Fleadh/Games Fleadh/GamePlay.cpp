@@ -123,7 +123,7 @@ void GamePlay::render(sf::RenderWindow& t_window)
 	// Enemies
 	for (int i = 0; i < BattleManager::enemyAmount; i++)
 	{
-		BattleManager::currentEnemies[i].draw(t_window);
+		BattleManager::currentEnemy.draw(t_window);
 	}
 }
 
@@ -140,11 +140,7 @@ void GamePlay::setupObjects()
 	// Deck
 	Deck::fillDeckRand();
 
-	// Setup Enemy (TEMP)
-	for (int i = 0; i < BattleManager::enemyAmount; i++)
-	{
-		BattleManager::currentEnemies[i].setupEnemy(Era::Futuristic);
-	}
+	
 
 
 	// Buttons

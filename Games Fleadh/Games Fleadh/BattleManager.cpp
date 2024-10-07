@@ -3,7 +3,7 @@
 
 
 std::vector<Enemy> BattleManager::allEnemies;
-Enemy BattleManager::currentEnemies[MAX_ENEMIES];
+Enemy BattleManager::currentEnemy;
 int BattleManager::enemyAmount = 1; // Set to 1 (TEMP)
 
 Player BattleManager::currentPlayers[MAX_PLAYERS];
@@ -33,10 +33,7 @@ void BattleManager::endTurn()
 		BattleManager::playerTurn = false;
 
 		// Do enemy turn...
-		for (int i = 0; i < enemyAmount; i++)
-		{
-			currentEnemies[i].doTurn();
-		}
+		currentEnemy.doTurn();
 		
 
 		BattleManager::turnNumber++;

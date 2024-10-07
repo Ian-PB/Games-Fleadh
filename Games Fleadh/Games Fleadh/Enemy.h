@@ -15,7 +15,6 @@
 
 enum class Era
 {
-	None,
 	Prehistoric,
 	Medieval,
 	Modern,
@@ -28,7 +27,7 @@ class Enemy
 {
 public:
 	Enemy();
-	void setupEnemy(Era t_era);
+	void setup(Era t_era);
 
 	void draw(sf::RenderWindow& t_window);
 
@@ -44,7 +43,7 @@ private:
 
 	// Hitbox (TEMP)
 	sf::RectangleShape body;
-	const int SIZE = 250;
+	static const int SIZE = 250;
 
 	sf::Sprite sprite;
 	sf::Texture texture;

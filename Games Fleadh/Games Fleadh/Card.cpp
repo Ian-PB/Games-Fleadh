@@ -64,7 +64,7 @@ void Card::useOnEnemies()
 	active = false;
 
     // Deal damage to the Enemy
-    BattleManager::currentEnemies[0].takeDamage(upgradeData[currentEra].damage);
+    BattleManager::currentEnemy.takeDamage(upgradeData[currentEra].damage);
 
 	// Do effects
     for (int i = 0; i < upgradeData[currentEra].amountOfEffects; i++)

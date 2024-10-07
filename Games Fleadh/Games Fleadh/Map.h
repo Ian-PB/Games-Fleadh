@@ -15,6 +15,8 @@ public:
 	void render(sf::RenderWindow& t_window);
 	void processEvents(sf::Event t_event);
 
+	
+
 private:
 	void processKeys(sf::Event t_event);
 	void processMouseMove(sf::Event t_event);

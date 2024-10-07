@@ -10,7 +10,7 @@ Enemy::Enemy()
 	body.setPosition({ (SCREEN_WIDTH / 4) * 3, SCREEN_HEIGHT / 4 });
 }
 
-void Enemy::setupEnemy(Era t_era)
+void Enemy::setup(Era t_era)
 {
 	// Randomize the amount of cards the enemy will have between 2-5 (inclusive)
 	amountOfCards = (rand() % 3) + 2;
@@ -18,9 +18,6 @@ void Enemy::setupEnemy(Era t_era)
 	// Setup the cards the enemy will have depending on its era
 	switch (t_era)
 	{
-	case Era::None:
-		break;
-
 	case Era::Prehistoric:
 
 		for (int i = 0; i < amountOfCards; i++)
