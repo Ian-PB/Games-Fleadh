@@ -211,6 +211,28 @@ void Map::findEachEncountersClosest()
 				}
 			}
 		}
+
+		else if (r == 1)
+		{
+			for (int e = 0; e < MAX_ENCOUNTERS_PER_RING; e++)
+			{
+				// Find the closest encounter to the current encounter on the next ring
+				float shortestDist = 1000000000;
+
+
+				for (int i = 0; i < 4; i++)
+				{
+					if (vectorLenght(rings[r].encounters[e].getPos(), rings[r - 1].encounters[i].getPos()) < shortestDist)
+					{
+						shortestDist = vectorLenght(rings[r].encounters[e].getPos(), rings[r - 1].encounters[i].getPos());
+
+						rings[r].encounters[e].closest[0] = &rings[r - 1].encounters[i];
+						//rings[r].encounters[e].closest[1] = &rings[r - 1].encounters[i];
+						//rings[r].encounters[e].closest[2] = &rings[r - 1].encounters[i];
+					}
+				}
+			}
+		}
 	}
 }
 
@@ -248,7 +270,7 @@ void Map::createPaths()
 	for (int r = MAX_RINGS - 1; r >= 0; r--)
 	{
 		// Check if its the last ring
-		if (r > 1)
+		if (r > 0)
 		{
 			// Go through each encounter on r ring
 			for (int e = 0; e < MAX_ENCOUNTERS_PER_RING; e++)
@@ -259,17 +281,20 @@ void Map::createPaths()
 					// Go through each closest encounter on the current ring
 					for (int c = 0; c < MAX_CLOSEST_ENCOUNTERS; c++)
 					{
-						if (rings[r].encounters[e].closest[c]->active && !rings[r].encounters[e].closest[c]->isolated)
+						if (rings[r].encounters[e].closest[c] != nullptr)
 						{
-							path.append(rings[r].encounters[e].getPos());
-							// std::cout << rings[r].encounters[e].getPos().x << ", " << rings[r].encounters[e].getPos().y << " --> ";
+							if (rings[r].encounters[e].closest[c]->active && !rings[r].encounters[e].closest[c]->isolated)
+							{
+								path.append(rings[r].encounters[e].getPos());
+								// std::cout << rings[r].encounters[e].getPos().x << ", " << rings[r].encounters[e].getPos().y << " --> ";
 
-							path.append(rings[r].encounters[e].closest[c]->getPos());
-							// std::cout << rings[r].encounters[e].closestPos[c].x << ", " << rings[r].encounters[e].closestPos[c].y << "\n";
-						}
-						else
-						{
-							std::cout << "Closest encounter not active \n";
+								path.append(rings[r].encounters[e].closest[c]->getPos());
+								// std::cout << rings[r].encounters[e].closestPos[c].x << ", " << rings[r].encounters[e].closestPos[c].y << "\n";
+							}
+							else
+							{
+								std::cout << "Closest encounter not active \n";
+							}
 						}
 					}
 				}

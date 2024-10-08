@@ -24,7 +24,7 @@ public:
 	// Closest encounters
 	void checkClosestAmount(); // If this returns false then that means that there is no closest encounters attached to this obj
 	bool isolated = false;
-	Encounter *closest[MAX_CLOSEST_ENCOUNTERS];
+	Encounter* closest[MAX_CLOSEST_ENCOUNTERS] = {nullptr, nullptr, nullptr};
 
 	// Interactions
 	void hovering();
